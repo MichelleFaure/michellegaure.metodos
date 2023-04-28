@@ -4,7 +4,18 @@ const listaTarea = document.querySelector('.listaTareas');
 const tareasTotal = document.querySelector('.tareasTotal');
 const tareasRealizadas = document.querySelector('.tareasRealizadas');
 
-let tareas = [];
+
+
+let tareas = [
+    {id: 1, tareaCreada: "barrer" },
+    {id: 2, tareaCreada: "sacar la basura" },
+    {id: 3, tareaCreada: "clases" }
+];
+
+renderRows()
+actualizarTotal()
+actualizartareasRealizadas()
+
 btnAgregar.addEventListener("click", function(){
     const nuevaTarea = tareaInput.value;
     tareas.push({id: Date.now(), tareaCreada: nuevaTarea });
@@ -14,6 +25,7 @@ btnAgregar.addEventListener("click", function(){
     actualizartareasRealizadas()
 
 })
+
 
 
 //FUNCION PARA BORRAR
