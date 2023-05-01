@@ -56,7 +56,7 @@ section span{
 }
 
 th, td{
-    text-align: start;
+    text-align: center;
     padding-right: 1rem;
 }
 
@@ -65,4 +65,40 @@ th, td{
     border: none;
     color: red;
     font-size: 1rem;
+    cursor: pointer;
+
 }
+
+.btn-realizado{
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+        
+}
+.true{
+    color: green;
+}
+
+.fa-check{
+    display: none;
+
+}
+
+.true .fa-check{
+    display: inline;
+}
+
+.true .fa-xmark{
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+

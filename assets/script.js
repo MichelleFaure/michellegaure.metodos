@@ -5,77 +5,85 @@ const tareasTotal = document.querySelector('.tareasTotal');
 const tareasRealizadas = document.querySelector('.tareasRealizadas');
 
 
-
 let tareas = [
-    {id: 1, tareaCreada: "barrer" },
-    {id: 2, tareaCreada: "sacar la basura" },
-    {id: 3, tareaCreada: "clases" }
+    {id: 1, tareaCreada: "barrer", status: false },
+    {id: 2, tareaCreada: "sacar la basura", status: false },
+    {id: 3, tareaCreada: "clases", status: false }
 ];
 
 renderRows()
-actualizarTotal()
-actualizartareasRealizadas()
 
 btnAgregar.addEventListener("click", function(){
-    const nuevaTarea = tareaInput.value;
-    tareas.push({id: Date.now(), tareaCreada: nuevaTarea });
-    tareaInput.value = "";
-    renderRows()
-    actualizarTotal()
-    actualizartareasRealizadas()
 
+    if(tareaInput.value == ""){
+        alert('Debe ingresar una tarea');
+    }
+
+    else{
+        const nuevaTarea = tareaInput.value;
+        tareas.push({id: tareas.length+1, tareaCreada: nuevaTarea, status: false });
+        tareaInput.value = "";
+        renderRows()
+    }
 })
-
-
 
 //FUNCION PARA BORRAR
 function borrar(id){
     const index = tareas.findIndex((ele) => ele.id == id);
     tareas.splice(index, 1);
     renderRows();
-    actualizarTotal()
+
 }
 
 //FUNCION PARA ACTUALIZAR TAREAS 
 function renderRows(){
     let html = "";
+    let conteo = 0
+    
 
     tareas.forEach(function(tarea){
+
+        if (tarea.status) {
+            conteo++;
+        }
+
         html += 
         `<tr >
             <td>${tarea.id}</td>
             <td>${tarea.tareaCreada}</td>
             <td>
-                <input type="checkbox" class="check">
+                <button class="btn-realizado ${tarea.status}" onclick="actualizarstatus(${tarea.id})">
+                        <i class="fa-solid fa-xmark fa-2x"></i>
+                        <i class="fa-solid fa-check fa-2x"></i>
+                </button>
             </td>
             <td>
-                <button class="btn-borrar" onclick="borrar(${tarea.id})" ><i class="fa-solid fa-xmark"></i></button>
+                <button class="btn-borrar" onclick="borrar(${tarea.id})" >
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
             </td>
         </tr>`
+        
     });
     listaTarea.innerHTML = html
+    tareasTotal.innerHTML = tareas.length
+    tareasRealizadas.innerHTML = conteo
+
 }
 
-//FUNCION PARA ACTUALIZAR TOTAL DE TAREAS 
-function actualizarTotal(){
-    tareasTotal.innerHTML = tareas.length
-}
+
 
 
 //FUNCION PARA ACTUALIZAR TAREAS REALIZADAS
-function actualizartareasRealizadas(){
-    const check = document.querySelectorAll('.check');
-    let conteo = 0
 
-    check.forEach(function(item){
-        item.addEventListener("click", function(){
-            if(item.checked){
-                conteo++
-            }
-            else{
-                conteo--
-            }
-            tareasRealizadas.innerHTML = conteo
-        })
-    });
+function actualizarstatus(tareaID){
+
+    const index = tareas.findIndex(tarea => tarea.id === tareaID);
+    tareas[index].status = !tareas[index].status;
+    
+    renderRows()
 }
+
+
+
+
